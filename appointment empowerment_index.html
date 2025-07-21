@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Empowerment Toolkit | Wellwithall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* * CSS variables are based on the Wellwithall color palette 
+         * derived from the provided 'health-empowerment-toolkit (1).html' file.
+         */
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-green: #10B981;
+            --accent-gold: #f59e0b;
+            --dark-blue: #1e40af;
+            --light-blue: #dbeafe;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-white: #ffffff;
+            --bg-light: #f9fafb;
+            --border-light: #e5e7eb;
+            --success-green: #059669;
+            --font-display: 'Georgia', serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-radius: 1rem;
+            animation: fadeInDown 0.5s ease-out;
+        }
+
+        .header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            opacity: 0.9;
+        }
+
+        .trust-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: var(--bg-white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+
+        .nav-tab {
+            flex: 1 0 auto;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-light);
+            color: var(--primary-blue);
+        }
+
+        .nav-tab.active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+        }
+
+        /* Tab Content Sections */
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-white);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-header:hover {
+            background-color: var(--bg-light);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .expand-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+
+        .card.expanded .card-content {
+            padding-bottom: 1.5rem;
+            max-height: 2000px;
+        }
+        
+        /* Insight Boxes */
+        .insight-box {
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+        
+        .insight-box p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        
+        /* Interactive Elements */
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .checklist-item:hover {
+            background-color: #f7fafc;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 0.25rem;
+            margin-right: 1rem;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            background: white;
+            cursor: pointer;
+        }
+
+        .checkbox.checked {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            animation: checkPop 0.3s ease;
+        }
+        
+        @keyframes checkPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+
+        .checklist-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        /* Input Fields */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-light);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Numbers Grid */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .numbers-header {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .number-input {
+            width: 80px;
+            text-align: center;
+        }
+        
+        /* Footer Buttons */
+        .footer-actions {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .btn-secondary {
+            background: var(--bg-white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* Success Toast Notification */
+        .success-toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--success-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: bottom 0.5s ease-in-out;
+        }
+
+        .success-toast.show {
+            bottom: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 0.5rem;
+            }
+            .nav-tab {
+                padding: 0.75rem;
+            }
+            .numbers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            .nav-tabs, .footer-actions, .success-toast, .header .trust-badge {
+                display: none;
+            }
+            .header {
+                background: none;
+                color: black;
+                text-align: left;
+                padding: 1rem 0;
+                border-bottom: 2px solid black;
+            }
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            .card.expanded .card-content, .card-content {
+                max-height: none !important;
+                padding: 1rem 1.5rem !important;
+            }
+            .input-field {
+                border: 1px solid #ccc;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🏥 Your Health Empowerment Toolkit</h1>
+            <p>Take Charge of Your Healthcare Journey</p>
+            <div class="trust-badge">Evidence-Based • Culturally-Informed • Empowering</div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('prepare')">📝 Prepare</div>
+            <div class="nav-tab" onclick="showTab('during')">🗣️ During Visit</div>
+            <div class="nav-tab" onclick="showTab('after')">📋 After Visit</div>
+            <div class="nav-tab" onclick="showTab('rights')">⚖️ Your Rights</div>
+        </nav>
+
+        <!-- Content Area -->
+        <main>
+            <!-- Prepare Tab -->
+            <div id="prepare" class="tab-content active">
+                <div class="card expanded">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">🎯 Define Your Purpose</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insight-box">
+                            <p><strong>Knowledge is Power:</strong> Patients who prepare for appointments report higher satisfaction. Your health journey is important.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="main-concern" class="input-label">What's bringing you in today? (Be specific)</label>
+                            <textarea id="main-concern" class="input-field" rows="3" placeholder="Example: I've been having headaches for 2 weeks..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="questions" class="input-label">What questions do you need answered?</label>
+                            <textarea id="questions" class="input-field" rows="3" placeholder="Example: Is this related to my blood pressure?"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="decisions" class="input-label">What decisions might you need to make?</label>
+                            <textarea id="decisions" class="input-field" rows="2" placeholder="Example: Whether to start new medication..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">📋 Your Preparation Checklist</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <ul class="checklist">
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-meds" class="checkbox"></div><div class="checklist-text"><strong>Complete medication list:</strong> Include prescriptions, vitamins, supplements, and herbal remedies.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-data" class="checkbox"></div><div class="checklist-text"><strong>Health tracking data:</strong> Blood pressure logs, symptom diary, etc.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-history" class="checkbox"></div><div class="checklist-text"><strong>Family health history.</strong></div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-reports" class="checkbox"></div><div class="checklist-text"><strong>Recent test results or reports.</strong></div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-support" class="checkbox"></div><div class="checklist-text"><strong>Support person or advocate</strong> (if desired).</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-id" class="checkbox"></div><div class="checklist-text"><strong>Insurance information & ID.</strong></div></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">📊 Know Your Numbers</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insight-box">
+                           <p><strong>Critical Health Monitoring:</strong> High blood pressure is often called the "silent killer." Regular monitoring is essential.</p>
+                        </div>
+                        <div class="numbers-grid">
+                            <div class="numbers-header">Health Metric</div>
+                            <div class="numbers-header">Today</div>
+                            <div class="numbers-header">Goal</div>
+                            
+                            <div>Blood Pressure</div>
+                            <input id="num-bp" type="text" class="input-field number-input" placeholder="___/___">
+                            <div>&lt;120/80</div>
+                            
+                            <div>A1c/Glucose</div>
+                            <input id="num-a1c" type="text" class="input-field number-input" placeholder="___">
+                            <div>&lt;7%</div>
+                            
+                            <div>LDL Cholesterol</div>
+                            <input id="num-ldl" type="text" class="input-field number-input" placeholder="___">
+                            <div>&lt;100</div>
+                            
+                            <div>BMI or Waist</div>
+                            <input id="num-bmi" type="text" class="input-field number-input" placeholder="___">
+                            <div>18.5-25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- During Visit Tab -->
+            <div id="during" class="tab-content">
+                <div class="card expanded">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">💬 Questions That Get Clear Answers</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insight-box">
+                            <p><strong>Trust Your Instincts:</strong> If something doesn't feel right, speak up. Your concerns are valid and deserve respect.</p>
+                        </div>
+                        <ul class="checklist">
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-options" class="checkbox"></div><div class="checklist-text"><strong>"What are all my options?"</strong> (Not just what they recommend).</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-wait" class="checkbox"></div><div class="checklist-text"><strong>"What happens if I wait or do nothing?"</strong>.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-working" class="checkbox"></div><div class="checklist-text"><strong>"How will we know if the treatment is working?"</strong>.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-risks" class="checkbox"></div><div class="checklist-text"><strong>"What are the risks and side effects?"</strong>.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-simple" class="checkbox"></div><div class="checklist-text"><strong>"Can you explain that in everyday language?"</strong>.</div></li>
+                            <li class="checklist-item" onclick="toggleCheck(this.querySelector('.checkbox'))"><div id="check-q-history" class="checkbox"></div><div class="checklist-text"><strong>"How does this relate to my family history?"</strong>.</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">💡 Real-Time Advocacy Tips</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>If You Feel Dismissed:</strong> "I need you to document in my chart that you're choosing not to run this test/address this concern."</p><br>
+                        <p><strong>If You're Interrupted:</strong> "I wasn't finished explaining my symptoms. This is important for my care."</p><br>
+                        <p><strong>If You Need Time:</strong> "I need a moment to think about this" or "I'd like to discuss this with my family first."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- After Visit Tab -->
+            <div id="after" class="tab-content">
+                <div class="card expanded">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">📝 Capture the Details While Fresh</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                         <div class="insight-box">
+                            <p><strong>Your Visit Matters Beyond Today:</strong> Documenting your experience helps track patterns and advocate for better care in the future.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="after-diagnosis" class="input-label">What was diagnosed or discussed?</label>
+                            <textarea id="after-diagnosis" class="input-field" rows="3" placeholder="In your own words - what did they say was going on?"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="after-recs" class="input-label">What was prescribed or recommended?</label>
+                            <textarea id="after-recs" class="input-field" rows="3" placeholder="Medications, tests, lifestyle changes, referrals..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="after-next" class="input-label">Next steps and timeline?</label>
+                            <textarea id="after-next" class="input-field" rows="2" placeholder="When to follow up, what to monitor, when to expect results..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Rights Tab -->
+            <div id="rights" class="tab-content">
+                <div class="card expanded">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">⚖️ You Have The Right To:</div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="insight-box">
+                            <p><strong>Healthcare Equity Matters:</strong> You have the right to culturally competent care, to be treated with dignity and respect, and to have your concerns taken seriously.</p>
+                        </div>
+                        <ul class="checklist">
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Understand everything being done to your body.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Say "no" or "not yet" to any treatment.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Get a second opinion without judgment.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Have a support person present.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Request a different provider if you're uncomfortable.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Have your pain and symptoms taken seriously.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Receive culturally competent care.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">Access interpretation services if needed.</div></li>
+                            <li class="checklist-item"><div class="checkbox checked"></div><div class="checklist-text">See your medical records anytime.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer-actions">
+            <button class="btn btn-secondary" onclick="printKit()">🖨️ Print a Copy</button>
+            <button class="btn" onclick="saveData()">💾 Save My Progress</button>
+            <button class="btn" onclick="shareKit()">📤 Share with Advocate</button>
+        </footer>
+    </div>
+    
+    <div id="success-toast" class="success-toast">Progress Saved!</div>
+
+    <script>
+        const STORAGE_KEY = 'wellwithallToolkitData';
+
+        /**
+         * Handles tab navigation.
+         * @param {string} tabName - The ID of the tab content to show.
+         */
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(navTab => {
+                navTab.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.nav-tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        /**
+         * Toggles the expanded/collapsed state of a card.
+         * @param {HTMLElement} header - The header element of the card that was clicked.
+         */
+        function toggleCard(header) {
+            const card = header.parentElement;
+            card.classList.toggle('expanded');
+        }
+
+        /**
+         * Toggles the 'checked' state of a custom checkbox.
+         * @param {HTMLElement} checkbox - The checkbox element to toggle.
+         */
+        function toggleCheck(checkbox) {
+            checkbox.classList.toggle('checked');
+        }
+
+        /**
+         * Saves all user input (text fields and checkboxes) to localStorage.
+         */
+        function saveData() {
+            const appData = {
+                text: {},
+                checkboxes: {}
+            };
+
+            // Save all text and number inputs
+            document.querySelectorAll('.input-field').forEach(input => {
+                if (input.id) {
+                    appData.text[input.id] = input.value;
+                }
+            });
+
+            // Save all checkbox states
+            document.querySelectorAll('.checkbox').forEach(checkbox => {
+                if (checkbox.id) {
+                    appData.checkboxes[checkbox.id] = checkbox.classList.contains('checked');
+                }
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            showSuccessToast('Your progress has been saved!');
+        }
+
+        /**
+         * Loads data from localStorage and populates the form fields.
+         */
+        function loadData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (!savedData) return;
+
+            const appData = JSON.parse(savedData);
+
+            // Load text and number inputs
+            if (appData.text) {
+                Object.keys(appData.text).forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input) {
+                        input.value = appData.text[id];
+                    }
+                });
+            }
+
+            // Load checkbox states
+            if (appData.checkboxes) {
+                Object.keys(appData.checkboxes).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        if (appData.checkboxes[id]) {
+                            checkbox.classList.add('checked');
+                        } else {
+                            checkbox.classList.remove('checked');
+                        }
+                    }
+                });
+            }
+        }
+
+        /**
+         * Prepares the document for printing.
+         */
+        function printKit() {
+            // Expand all cards for better print output
+            document.querySelectorAll('.card').forEach(card => {
+                if (!card.classList.contains('expanded')) {
+                    card.classList.add('expanded');
+                }
+            });
+            // A timeout allows cards to expand before the print dialog opens
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+
+        /**
+         * Uses the Web Share API to share the toolkit.
+         */
+        function shareKit() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Health Empowerment Toolkit',
+                    text: 'Here is the health toolkit we discussed for my appointment.',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                alert('Share feature is not available on this browser. You can copy the page URL to share.');
+            }
+        }
+        
+        /**
+         * Shows a temporary success message to the user.
+         * @param {string} message - The message to display.
+         */
+        function showSuccessToast(message) {
+            const toast = document.getElementById('success-toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Event Listeners ---
+
+        // Load data when the page is fully loaded
+        window.addEventListener('DOMContentLoaded', loadData);
+
+        // Auto-save when the user leaves the page
+        window.addEventListener('beforeunload', saveData);
+
+    </script>
+</body>
+</html>
